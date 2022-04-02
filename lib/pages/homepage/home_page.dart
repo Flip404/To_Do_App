@@ -1,11 +1,10 @@
-import 'package:first_firebase_project/features/todolist_features.dart';
 import 'package:first_firebase_project/models/todolist_model.dart';
 import 'package:first_firebase_project/pages/homepage/widgets/add_todo.dart';
 import 'package:first_firebase_project/pages/homepage/widgets/edit_todo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:first_firebase_project/provider/theme_provider.dart';
+import 'package:first_firebase_project/provider/todo_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final featuresProvider = Provider.of<FeaturesProvider>(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -28,20 +27,20 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           actions: [
             IconButton(
-                icon: Icon(themeProvider.isDarkMode
+                icon: Icon(featuresProvider.isDarkMode
                     ? Icons.light_mode
                     : Icons.dark_mode),
                 onPressed: () {
                   final theme =
-                      Provider.of<ThemeProvider>(context, listen: false);
-                  themeProvider.isDarkMode
+                      Provider.of<FeaturesProvider>(context, listen: false);
+                  featuresProvider.isDarkMode
                       ? theme.toggleTheme(false)
                       : theme.toggleTheme(true);
                 })
           ],
         ),
         body: StreamBuilder<List<ToDo>>(
-            stream: ToDoListFeatures.todoList(),
+            stream: featuresProvider.listTodo(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Center(
@@ -79,7 +78,11 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  Widget buildToDo(ToDo todo) => Card(
+  Widget buildToDo(ToDo todo){
+    
+    final featuresProvider = Provider.of<FeaturesProvider>(context);
+    
+    return Card(
         color: const Color.fromARGB(255, 105, 190, 224),
         margin: const EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
@@ -94,7 +97,7 @@ class _HomePageState extends State<HomePage> {
               ),
               value: todo.isDone,
               onChanged: ((value) {
-                ToDoListFeatures.todoCheckBoxUpdate(id: todo.id, isDone: value);
+                featuresProvider.toggleTodo(todo.id, value);
               }),
             ),
             title: Text(
@@ -119,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                  ToDoListFeatures.todoDelete(id: todo.id);
+                  featuresProvider.removeTodo(todo.id);
                 }),
                 icon: const Icon(
                   Icons.delete,
@@ -132,4 +135,5 @@ class _HomePageState extends State<HomePage> {
                     widgetTitle: todo.title,
                     widgetDescription: todo.description))),
       );
+  }
 }

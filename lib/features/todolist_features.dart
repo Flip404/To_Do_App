@@ -12,6 +12,7 @@ class ToDoListFeatures {
 
   static Stream<List<ToDo>> todoList() => FirebaseFirestore.instance
       .collection('ToDoList')
+      .orderBy('date', descending: true)
       .snapshots()
       .map((event) => event.docs.map((e) => ToDo.fromJson(e.data())).toList());
 
@@ -23,8 +24,7 @@ class ToDoListFeatures {
     tododoc.update({'title': title, 'description': description});
   }
 
-  static Future todoCheckBoxUpdate(
-      {required String id, required bool? isDone}) async {
+  static Future todoCheckBoxUpdate({required String id, required bool? isDone}) async {
     final tododoc = FirebaseFirestore.instance.collection('ToDoList').doc(id);
     tododoc.update({'isDone': isDone});
   }

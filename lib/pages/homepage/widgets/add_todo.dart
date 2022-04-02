@@ -1,6 +1,7 @@
-import 'package:first_firebase_project/features/todolist_features.dart';
 import 'package:first_firebase_project/models/todolist_model.dart';
+import 'package:first_firebase_project/provider/todo_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddToDo extends StatefulWidget {
   const AddToDo({Key? key}) : super(key: key);
@@ -16,6 +17,9 @@ class _AddToDoState extends State<AddToDo> {
 
   @override
   Widget build(BuildContext context) {
+
+    final featuresProvider = Provider.of<FeaturesProvider>(context);
+
     return Form(
       key: _forvalidateTitle,
       child: AlertDialog(
@@ -100,7 +104,7 @@ class _AddToDoState extends State<AddToDo> {
                           title: title.text,
                           description: description.text,
                           date: date);
-                      ToDoListFeatures.todoAdd(todo: todo);
+                      featuresProvider.addTodo(todo);
                       Navigator.of(context).pop();
                     }
                   }),

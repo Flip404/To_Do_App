@@ -1,6 +1,6 @@
-import 'package:first_firebase_project/features/todolist_features.dart';
-import 'package:first_firebase_project/models/todolist_model.dart';
+import 'package:first_firebase_project/provider/todo_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditToDo extends StatefulWidget {
   final String widgetId;
@@ -25,11 +25,14 @@ class _EditToDoState extends State<EditToDo> {
 
   @override
   Widget build(BuildContext context) {
+
+    final featuresProvider = Provider.of<FeaturesProvider>(context);
+
     return Form(
       key: _forvalidateTitle,
       child: AlertDialog(
-        shape: RoundedRectangleBorder(  
-          borderRadius: BorderRadius.circular(20.0),  
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
         title: SingleChildScrollView(
           reverse: true,
@@ -110,27 +113,23 @@ class _EditToDoState extends State<EditToDo> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color.fromRGBO(105, 190, 224, 1)
-                  ),
-                  onPressed: (() {
-                    if (_forvalidateTitle.currentState!.validate()) {
-                      if (title.isEmpty || description.isEmpty){
-                        if (title.isEmpty){
-                          title = widget.widgetTitle;
-                        } else{
-                          description = widget.widgetDescription;
+                    style: ElevatedButton.styleFrom(
+                        primary: const Color.fromRGBO(105, 190, 224, 1)),
+                    onPressed: (() {
+                      if (_forvalidateTitle.currentState!.validate()) {
+                        if (title.isEmpty || description.isEmpty) {
+                          if (title.isEmpty) {
+                            title = widget.widgetTitle;
+                          } else {
+                            description = widget.widgetDescription;
+                          }
                         }
+                        featuresProvider.updateTodo(
+                            widget.widgetId, title, description);
+                        Navigator.of(context).pop();
                       }
-                      ToDoListFeatures.todoUpdate(
-                          id: widget.widgetId,
-                          title: title,
-                          description: description);
-                      Navigator.of(context).pop();
-                    }
-                  }),
-                  child: const Icon(Icons.edit, size: 30)
-                ),
+                    }),
+                    child: const Icon(Icons.edit, size: 30)),
               )
             ],
           ),
