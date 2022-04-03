@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           final featuresProvider = Provider.of<FeaturesProvider>(context);
 
           return MaterialApp(
-            showPerformanceOverlay: true,
+            // showPerformanceOverlay: true,
             title: 'To Do List App',
             themeMode: featuresProvider.mode,
             theme: ThemeData.light(),

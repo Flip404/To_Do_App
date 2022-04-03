@@ -17,11 +17,9 @@ class ToDoListFeatures {
       .map((event) => event.docs.map((e) => ToDo.fromJson(e.data())).toList());
 
   static Future todoUpdate(
-      {required String id,
-      required String title,
-      required String description}) async {
-    final tododoc = FirebaseFirestore.instance.collection('ToDoList').doc(id);
-    tododoc.update({'title': title, 'description': description});
+      {required ToDo todo}) async {
+    final tododoc = FirebaseFirestore.instance.collection('ToDoList').doc(todo.id);
+    tododoc.update(todo.toJson());
   }
 
   static Future todoCheckBoxUpdate({required String id, required bool? isDone}) async {

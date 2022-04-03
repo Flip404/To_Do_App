@@ -18,7 +18,7 @@ class FeaturesProvider extends ChangeNotifier {
 
   void toggleTodo(String id, bool? isDone) => ToDoListFeatures.todoCheckBoxUpdate(id: id, isDone: isDone);
 
-  void updateTodo(String id, String title, String description) => ToDoListFeatures.todoUpdate(id: id, title: title, description: description);
+  void updateTodo(ToDo todo) => ToDoListFeatures.todoUpdate(todo: todo);
 
   Stream<List<ToDo>> listTodo() => ToDoListFeatures.todoList();
 }

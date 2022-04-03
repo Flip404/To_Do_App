@@ -1,17 +1,14 @@
+import 'package:first_firebase_project/models/todolist_model.dart';
 import 'package:first_firebase_project/provider/todo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditToDo extends StatefulWidget {
-  final String widgetId;
-  final String widgetTitle;
-  final String widgetDescription;
+  final ToDo todo;
 
   const EditToDo(
       {Key? key,
-      required this.widgetId,
-      required this.widgetTitle,
-      required this.widgetDescription})
+      required this.todo})
       : super(key: key);
 
   @override
@@ -49,7 +46,7 @@ class _EditToDoState extends State<EditToDo> {
               ),
               const SizedBox(height: 5),
               TextFormField(
-                initialValue: widget.widgetTitle,
+                initialValue: widget.todo.title,
                 onChanged: (e) {
                   setState(() {
                     title = e;
@@ -83,7 +80,7 @@ class _EditToDoState extends State<EditToDo> {
               ),
               const SizedBox(height: 5),
               TextFormField(
-                initialValue: widget.widgetDescription,
+                initialValue: widget.todo.description,
                 onChanged: (e) {
                   setState(() {
                     description = e;
@@ -117,15 +114,17 @@ class _EditToDoState extends State<EditToDo> {
                         primary: const Color.fromRGBO(105, 190, 224, 1)),
                     onPressed: (() {
                       if (_forvalidateTitle.currentState!.validate()) {
+                        ToDo todo = widget.todo;
                         if (title.isEmpty || description.isEmpty) {
-                          if (title.isEmpty) {
-                            title = widget.widgetTitle;
+                          if (title.isEmpty && description.isEmpty){
+                            todo = widget.todo;
+                          } else if (title.isEmpty) {
+                            widget.todo.description = description;
                           } else {
-                            description = widget.widgetDescription;
+                            widget.todo.title = title;
                           }
                         }
-                        featuresProvider.updateTodo(
-                            widget.widgetId, title, description);
+                        featuresProvider.updateTodo(todo);
                         Navigator.of(context).pop();
                       }
                     }),

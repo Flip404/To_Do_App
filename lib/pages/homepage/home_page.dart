@@ -130,10 +130,8 @@ class _HomePageState extends State<HomePage> {
                 )),
             onTap: () => showDialog(
                 context: context,
-                builder: (context) => EditToDo(
-                    widgetId: todo.id,
-                    widgetTitle: todo.title,
-                    widgetDescription: todo.description))),
+                builder: (context) => EditToDo(todo: todo))
+        ),
       );
   }
 }
