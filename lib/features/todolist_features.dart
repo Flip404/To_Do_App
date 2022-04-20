@@ -3,6 +3,7 @@ import 'package:first_firebase_project/models/todolist_model.dart';
 import 'dart:async';
 
 class ToDoListFeatures {
+  
   static Future todoAdd({required ToDo todo}) async {
     final tododoc = FirebaseFirestore.instance.collection('ToDoList').doc();
     todo.id = tododoc.id;
@@ -10,9 +11,9 @@ class ToDoListFeatures {
     await tododoc.set(todojson);
   }
 
-  static Stream<List<ToDo>> todoList() => FirebaseFirestore.instance
+  static Stream<List<ToDo>> todoList({required String userid}) => FirebaseFirestore.instance
       .collection('ToDoList')
-      .orderBy('date', descending: true)
+      .where('userId', isEqualTo: userid)
       .snapshots()
       .map((event) => event.docs.map((e) => ToDo.fromJson(e.data())).toList());
 

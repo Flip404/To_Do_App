@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_firebase_project/models/todolist_model.dart';
 import 'package:first_firebase_project/provider/todo_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _AddToDoState extends State<AddToDo> {
   Widget build(BuildContext context) {
 
     final featuresProvider = Provider.of<FeaturesProvider>(context);
+    final user = FirebaseAuth.instance.currentUser!;
 
     return Form(
       key: _forvalidateTitle,
@@ -66,6 +68,7 @@ class _AddToDoState extends State<AddToDo> {
                   }
                   return null;
                 },
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 5),
               TextFormField(
@@ -89,6 +92,7 @@ class _AddToDoState extends State<AddToDo> {
                       letterSpacing: 2),
                 ),
                 maxLines: 2,
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 5),
               SizedBox(
@@ -103,7 +107,8 @@ class _AddToDoState extends State<AddToDo> {
                       ToDo todo = ToDo(
                           title: title.text,
                           description: description.text,
-                          date: date);
+                          date: date,
+                          userId: user.uid);
                       featuresProvider.addTodo(todo);
                       Navigator.of(context).pop();
                     }

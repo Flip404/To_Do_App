@@ -6,6 +6,7 @@ class ToDo {
   String description;
   DateTime date;
   bool isDone;
+  String userId;
 
   ToDo({
     this.id = '',
@@ -13,6 +14,7 @@ class ToDo {
     this.description = '',
     required this.date,
     this.isDone = false,
+    required this.userId,
   });
 
   static ToDo fromJson(Map<String, dynamic> json) => ToDo(
@@ -21,6 +23,7 @@ class ToDo {
         description: json['description'],
         date: (json['date'] as Timestamp).toDate(),
         isDone: json['isDone'],
+        userId: json['userId'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,5 +32,6 @@ class ToDo {
         'description': description,
         'date': date,
         'isDone': isDone,
+        'userId': userId,
       };
 }

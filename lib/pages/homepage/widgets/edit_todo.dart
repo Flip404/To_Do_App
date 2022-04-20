@@ -77,6 +77,7 @@ class _EditToDoState extends State<EditToDo> {
                   }
                   return null;
                 },
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 5),
               TextFormField(
@@ -105,6 +106,7 @@ class _EditToDoState extends State<EditToDo> {
                       letterSpacing: 2),
                 ),
                 maxLines: 2,
+                textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 5),
               SizedBox(
