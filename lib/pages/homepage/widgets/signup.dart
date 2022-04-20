@@ -17,6 +17,7 @@ class SignupWidget extends StatefulWidget {
 class _SignupWidgetState extends State<SignupWidget> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+  final passwordcontroller1 = TextEditingController();
   final _forValidateEmailPWD = GlobalKey<FormState>();
 
   @override
@@ -47,13 +48,21 @@ class _SignupWidgetState extends State<SignupWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 15),
+            Image.asset(
+              'assets/register.png',
+              width: 200,
+              height: 200,
+            ),
+            const SizedBox(height: 10),
             const Text(
-              "Sign Up",
+              "Register",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 fontFamily: "PlayfairDisplay",
                 letterSpacing: 2,
+                color: Color.fromRGBO(105, 190, 224, 1),
               ),
             ),
             const SizedBox(height: 10),
@@ -68,13 +77,13 @@ class _SignupWidgetState extends State<SignupWidget> {
                 labelStyle: TextStyle(
                     color: Color.fromRGBO(105, 190, 224, 1),
                     fontFamily: "PlayfairDisplay",
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2),
                 floatingLabelStyle: TextStyle(
                     color: Color.fromRGBO(105, 190, 224, 0.8),
                     fontFamily: "PlayfairDisplay",
-                    fontSize: 18,
+                    fontSize: 14,
                     letterSpacing: 2),
               ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -98,19 +107,51 @@ class _SignupWidgetState extends State<SignupWidget> {
                 labelStyle: TextStyle(
                     color: Color.fromRGBO(105, 190, 224, 1),
                     fontFamily: "PlayfairDisplay",
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2),
                 floatingLabelStyle: TextStyle(
                     color: Color.fromRGBO(105, 190, 224, 0.8),
                     fontFamily: "PlayfairDisplay",
-                    fontSize: 18,
+                    fontSize: 14,
                     letterSpacing: 2),
               ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
+              obscureText: true,
               validator: (pwd) {
                 if (pwd != null && pwd.length < 6) {
                   return "Enter min 6 characters";
+                }
+                return null;
+              },
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: passwordcontroller1,
+              decoration: const InputDecoration(
+                icon: Icon(
+                  Icons.password,
+                  color: Color.fromRGBO(105, 190, 224, 1),
+                ),
+                labelText: "Password confirm",
+                labelStyle: TextStyle(
+                    color: Color.fromRGBO(105, 190, 224, 1),
+                    fontFamily: "PlayfairDisplay",
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2),
+                floatingLabelStyle: TextStyle(
+                    color: Color.fromRGBO(105, 190, 224, 0.8),
+                    fontFamily: "PlayfairDisplay",
+                    fontSize: 14,
+                    letterSpacing: 2),
+              ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              obscureText: true,
+              validator: (pwd) {
+                if (pwd != null && pwd != passwordcontroller.text) {
+                  return "Password must be samed!!";
                 }
                 return null;
               },
@@ -125,10 +166,14 @@ class _SignupWidgetState extends State<SignupWidget> {
                 icon: const Icon(
                   Icons.touch_app,
                   size: 32,
+                  color: Colors.white,
                 ),
                 label: const Text(
-                  "Sign Up",
-                  style: TextStyle(fontSize: 24),
+                  "Register",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
                 )),
             const SizedBox(height: 10),
             RichText(
