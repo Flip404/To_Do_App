@@ -11,9 +11,17 @@ class ToDoListFeatures {
     await tododoc.set(todojson);
   }
 
-  static Stream<List<ToDo>> todoList({required String userid}) => FirebaseFirestore.instance
+  static Stream<List<ToDo>> todoListNotDone({required String userid}) => FirebaseFirestore.instance
       .collection('ToDoList')
       .where('userId', isEqualTo: userid)
+      .where('isDone', isEqualTo: false)
+      .snapshots()
+      .map((event) => event.docs.map((e) => ToDo.fromJson(e.data())).toList());
+
+  static Stream<List<ToDo>> todoListDone({required String userid}) => FirebaseFirestore.instance
+      .collection('ToDoList')
+      .where('userId', isEqualTo: userid)
+      .where('isDone', isEqualTo: true)
       .snapshots()
       .map((event) => event.docs.map((e) => ToDo.fromJson(e.data())).toList());
 

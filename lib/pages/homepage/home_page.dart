@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_firebase_project/models/todolist_model.dart';
 import 'package:first_firebase_project/pages/homepage/widgets/add_todo.dart';
 import 'package:first_firebase_project/pages/homepage/widgets/edit_todo.dart';
+import 'package:first_firebase_project/pages/homepage/widgets/list_todo.dart';
+import 'package:first_firebase_project/pages/homepage/widgets/list_todo_done.dart';
 import 'package:first_firebase_project/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +17,26 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+
+  late TabController tabcontroller;
+
+  @override
+  void initState() {
+    super.initState();
+    tabcontroller = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    tabcontroller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final featuresProvider = Provider.of<FeaturesProvider>(context);
-    final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
         appBar: AppBar(
@@ -46,35 +62,21 @@ class _HomePageState extends State<HomePage> {
               onPressed: () => FirebaseAuth.instance.signOut()
             )
           ],
+          bottom: TabBar(
+            controller: tabcontroller,
+            tabs: const [
+              Tab(icon: Icon(Icons.rule),),
+              Tab(icon: Icon(Icons.checklist_rtl),)
+            ],
+          ),
         ),
-        body: StreamBuilder<List<ToDo>>(
-            stream: featuresProvider.listTodo(user.uid),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(
-                    child: Text("Something was wrong ${snapshot.error}"));
-              } else if (snapshot.hasData) {
-                final data = snapshot.data!;
-                if (data.isEmpty) {
-                  return const Center(
-                      child: Text(
-                    "No Lists.",
-                    style: TextStyle(
-                        fontFamily: "PlayfairDisplay",
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  ));
-                } else {
-                  return ListView(
-                    children: data.map(buildToDo).toList(),
-                  );
-                }
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+        body: TabBarView(
+          controller: tabcontroller,
+          children: const [
+            ToDoListNotDone(),
+            ToDoListDone()
+          ]
+        ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color.fromRGBO(164, 210, 224, 1),
           child: const Icon(

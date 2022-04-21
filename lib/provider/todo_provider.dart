@@ -20,5 +20,7 @@ class FeaturesProvider extends ChangeNotifier {
 
   void updateTodo(ToDo todo) => ToDoListFeatures.todoUpdate(todo: todo);
 
-  Stream<List<ToDo>> listTodo(String userId) => ToDoListFeatures.todoList(userid: userId);
+  Stream<List<ToDo>> listTodoDone(String userId) => ToDoListFeatures.todoListDone(userid: userId);
+
+  Stream<List<ToDo>> listTodoNotDone(String userId) => ToDoListFeatures.todoListNotDone(userid: userId);
 }
