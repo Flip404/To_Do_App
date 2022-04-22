@@ -37,6 +37,7 @@ class _SignupWidgetState extends State<SignupWidget> {
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     }
+    print(widget.onClickedLogIn);
   }
 
   @override

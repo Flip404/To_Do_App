@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_firebase_project/pages/homepage/home_page.dart';
-import 'package:first_firebase_project/pages/homepage/widgets/auth.dart';
+import 'package:first_firebase_project/pages/homepage/widgets/login.dart';
+import 'package:first_firebase_project/pages/homepage/widgets/signup.dart';
 import 'package:first_firebase_project/provider/todo_provider.dart';
 import 'package:first_firebase_project/utils.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final features = Provider.of<FeaturesProvider>(context);
+
     return Scaffold(
       body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -65,7 +68,9 @@ class MainPage extends StatelessWidget {
             } else if (snapshot.hasData) {
               return const HomePage();
             } else {
-              return const AuthPage();
+              return features.logSign
+                  ? LoginWidget(onClickedSignUp: features.togglLogIn)
+                  : SignupWidget(onClickedLogIn: features.togglLogIn);
             }
           }),
     );

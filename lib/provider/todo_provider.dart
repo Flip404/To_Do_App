@@ -23,4 +23,13 @@ class FeaturesProvider extends ChangeNotifier {
   Stream<List<ToDo>> listTodoDone(String userId) => ToDoListFeatures.todoListDone(userid: userId);
 
   Stream<List<ToDo>> listTodoNotDone(String userId) => ToDoListFeatures.todoListNotDone(userid: userId);
+
+  bool logSign = true;
+
+  void togglLogIn() {
+    logSign = !logSign;
+    notifyListeners();
+  }
+
+
 }

@@ -86,7 +86,7 @@ class _ToDoListNotDoneState extends State<ToDoListNotDone> {
                   featuresProvider.removeTodo(todo.id);
                 }),
                 icon: const Icon(
-                  Icons.delete,
+                  Icons.delete_forever,
                   color: Color.fromRGBO(10, 12, 28, 1),
                 )),
             onTap: () => showDialog(
