@@ -19,33 +19,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => FeaturesProvider(),
-        builder: (context, _) {
-          final featuresProvider = Provider.of<FeaturesProvider>(context);
+      create: (context) => FeaturesProvider(),
+      builder: (context, _) {
+        final featuresProvider = Provider.of<FeaturesProvider>(context);
 
-          return MaterialApp(
-            scaffoldMessengerKey: Utils.messengerKey,
-            debugShowCheckedModeBanner: false,
-            // showPerformanceOverlay: true,
-            title: 'To Do List App',
-            themeMode: featuresProvider.mode,
-            theme: ThemeData(
-              primarySwatch: Colors.grey,
-              primaryColor: Colors.white,
-              brightness: Brightness.light,
-              backgroundColor: const Color(0xFFFFFFFF),
-              dividerColor: Colors.white54,
-            ),
-            darkTheme: ThemeData(
-              primarySwatch: Colors.grey,
-              primaryColor: Colors.black,
-              brightness: Brightness.dark,
-              backgroundColor: const Color(0x00000000),
-              dividerColor: Colors.black12,
-            ),
-            home: const MainPage(),
-          );
-        });
+        return MaterialApp(
+          scaffoldMessengerKey: Utils.messengerKey,
+          debugShowCheckedModeBanner: false,
+          // showPerformanceOverlay: true,
+          title: 'To Do List App',
+          themeMode: featuresProvider.mode,
+          theme: ThemeData(
+            primarySwatch: Colors.grey,
+            primaryColor: Colors.white,
+            brightness: Brightness.light,
+            backgroundColor: const Color(0xFFFFFFFF),
+            dividerColor: Colors.white54,
+          ),
+          darkTheme: ThemeData(
+            primarySwatch: Colors.grey,
+            primaryColor: Colors.black,
+            brightness: Brightness.dark,
+            backgroundColor: const Color(0x00000000),
+            dividerColor: Colors.black12,
+          ),
+          home: const MainPage(),
+        );
+      },
+    );
   }
 }
 

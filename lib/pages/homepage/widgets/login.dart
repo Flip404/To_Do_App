@@ -108,7 +108,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           const SizedBox(height: 10),
           ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromRGBO(105, 190, 224, 1),
+                backgroundColor: const Color.fromRGBO(105, 190, 224, 1),
                 minimumSize: const Size.fromHeight(50),
               ),
               onPressed: logIn,
