@@ -1,6 +1,7 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:first_firebase_project/features/todolist_features.dart';
 import 'package:first_firebase_project/models/todolist_model.dart';
+import 'package:first_firebase_project/models/update_model.dart';
 import 'package:flutter/material.dart';
 
 class FeaturesProvider extends ChangeNotifier {
@@ -45,6 +46,8 @@ class FeaturesProvider extends ChangeNotifier {
     );
     await remoteConfig.fetchAndActivate();
     final appversion = remoteConfig.getString("app_version");
-    debugPrint("appversion : $appversion");
+    final forceUpdate = forceUpdateFromJson(appversion);
+    debugPrint("appversion : ${forceUpdate.enName}");
+    debugPrint("appversion : ${forceUpdate.enDescription}");
   }
 }
